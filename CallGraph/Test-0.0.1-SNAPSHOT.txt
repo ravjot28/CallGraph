@@ -1,0 +1,13 @@
+C:Main Main
+C:Main java.lang.Object
+C:Main Main1
+M:Main:<init> (O)java.lang.Object:<init>
+M:Main:temp (S)Main1:temp1
+C:Main1 Main1
+C:Main1 java.lang.Object
+C:Main1 Main3
+M:Main1:<init> (O)java.lang.Object:<init>
+M:Main1:temp1 (S)Main3:temp3
+C:Main3 Main3
+C:Main3 java.lang.Object
+M:Main3:<init> (O)java.lang.Object:<init>
