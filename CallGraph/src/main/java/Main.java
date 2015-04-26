@@ -11,29 +11,23 @@ import java.util.StringTokenizer;
 import callGraph.DirectedGraph;
 
 public class Main {
-
-	private static String TARGET_JAR_LOCATION = "/Users/Rav/Desktop/stable-3-6/weka/weka.jar";
-	// private static String TARGET_JAR_LOCATION =
-	// "/Volumes/iPhoto/3rdPaper/Test/target/Test-0.0.1-SNAPSHOT.jar";
 	private static String CALL_GRAPH_JAR = "/Users/Rav/Desktop/temp/java-callgraph/target/javacg-0.1-SNAPSHOT-static.jar";
-	private static String STORING_CALL_GRAPH = "/Volumes/iPhoto/3rdPaper/CallGraph/";
-
+	private static String TARGET_JAR_LOCATION = "/Users/Rav/Desktop/hadoop-common-2.2.0.jar ";
+	private static String STORING_CALL_GRAPH = "/Users/Rav/git/CallGraphAndControlFlow/CallGraph/";
 	private static List<String> visitedMethods;
 
+	private static String logFile = STORING_CALL_GRAPH
+			+ TARGET_JAR_LOCATION
+					.substring(TARGET_JAR_LOCATION.lastIndexOf("/") + 1)
+					.replaceAll(".jar", "").replaceAll(".war", "") + ".txt";
+
 	public static void getCallGraph() {
+		String cmd1 = "java -jar " + CALL_GRAPH_JAR + " " + TARGET_JAR_LOCATION
+				+ " > " + logFile;
+
+		System.out.println(cmd1);
 		try {
-			String[] cmd = {
-					"/bin/sh",
-					"-c",
-					"java -jar "
-							+ CALL_GRAPH_JAR
-							+ " "
-							+ TARGET_JAR_LOCATION
-							+ " > "
-							+ STORING_CALL_GRAPH
-							+ TARGET_JAR_LOCATION.substring(
-									TARGET_JAR_LOCATION.lastIndexOf("/"))
-									.replaceAll(".jar", "") + ".txt" };
+			String[] cmd = { "/bin/sh", "-c", cmd1 };
 
 			Process p = Runtime.getRuntime().exec(cmd);
 
@@ -43,15 +37,10 @@ public class Main {
 					p.getErrorStream()));
 
 			String s = null;
-			// read the output from the command
-			// System.out.println("Here is the standard output of the command:\n");
 			while ((s = stdInput.readLine()) != null) {
 
 			}
 
-			// read any errors from the attempted command
-			// System.out
-			// .println("Here is the standard error of the command (if any):\n");
 			while ((s = stdError.readLine()) != null) {
 				System.out.println(s);
 			}
@@ -63,14 +52,11 @@ public class Main {
 		}
 	}
 
-	public static DirectedGraph generateCallGraph() {
+	public static DirectedGraph<String> generateCallGraph() {
 		DirectedGraph<String> graph = new DirectedGraph<String>();
 		BufferedReader b = null;
 		try {
-			b = new BufferedReader(new FileReader(STORING_CALL_GRAPH
-					+ TARGET_JAR_LOCATION.substring(
-							TARGET_JAR_LOCATION.lastIndexOf("/")).replaceAll(
-							".jar", "") + ".txt"));
+			b = new BufferedReader(new FileReader(logFile));
 
 			String line = b.readLine();
 
@@ -104,7 +90,7 @@ public class Main {
 	}
 
 	public static void searchParents(String method, DirectedGraph<String> graph) {
-		Iterator it = graph.mGraph.entrySet().iterator();
+		Iterator<?> it = graph.mGraph.entrySet().iterator();
 		while (it.hasNext()) {
 
 			Map.Entry pair = (Map.Entry) it.next();
@@ -118,16 +104,26 @@ public class Main {
 					System.out.println(pair.getKey());
 					searchParents(pair.getKey().toString(), graph);
 				}
+			} else {
+				visitedMethods = new ArrayList<String>();
 			}
 
 		}
 	}
 
 	public static void main(String[] args) {
-		// getCallGraph();
+		// TARGET_JAR_LOCATION = "/Users/Rav/Desktop/stable-3-6/weka/weka.jar";
+		// TARGET_JAR_LOCATION =
+		// "/Volumes/iPhoto/3rdPaper/Test/target/Test-0.0.1-SNAPSHOT.jar"
+		// TARGET_JAR_LOCATION =
+		// "/Users/Rav/git/spring-petclinic/target/petclinic.war";
+
+		getCallGraph();
 		DirectedGraph<String> graph = generateCallGraph();
 		visitedMethods = new ArrayList<String>();
-		searchParents("weka.core.Capabilities:enableAll", graph);
+		searchParents(
+				"org.springframework.samples.petclinic.service.ClinicService:findPetById",
+				graph);
 	}
 
 }
