@@ -12,7 +12,7 @@ import callGraph.DirectedGraph;
 
 public class Main {
 	private static String CALL_GRAPH_JAR = "/Users/Rav/Desktop/temp/java-callgraph/target/javacg-0.1-SNAPSHOT-static.jar";
-	private static String TARGET_JAR_LOCATION = "/Users/Rav/Desktop/hadoop-common-2.2.0.jar ";
+	private static String TARGET_JAR_LOCATION = "/Users/Rav/Desktop/hadoop-common-2.2.0.jar";
 	private static String STORING_CALL_GRAPH = "/Users/Rav/git/CallGraphAndControlFlow/CallGraph/";
 	private static List<String> visitedMethods;
 
@@ -118,7 +118,7 @@ public class Main {
 		// TARGET_JAR_LOCATION =
 		// "/Users/Rav/git/spring-petclinic/target/petclinic.war";
 
-		getCallGraph();
+		//getCallGraph();
 		DirectedGraph<String> graph = generateCallGraph();
 		visitedMethods = new ArrayList<String>();
 		searchParents(
