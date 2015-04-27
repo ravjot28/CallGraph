@@ -1,0 +1,7 @@
+org.apache.hadoop.http.HttpServer:<init>
+org.apache.hadoop.http.HttpServer:getFilterInitializers
+org.apache.hadoop.conf.Configuration:getInstances
+org.apache.hadoop.conf.Configuration:getLocalPath
+org.apache.hadoop.conf.Configuration:getFile
+org.apache.hadoop.conf.Configuration:getInts
+org.apache.hadoop.conf.Configuration:getClasses

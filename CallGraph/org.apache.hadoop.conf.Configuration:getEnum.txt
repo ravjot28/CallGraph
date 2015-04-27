@@ -1,0 +1,12 @@
+org.apache.hadoop.io.file.tfile.Compression$Algorithm$2:createCompressionStream
+org.apache.hadoop.io.compress.DefaultCodec:createOutputStream
+org.apache.hadoop.io.compress.DefaultCodec:createCompressor
+org.apache.hadoop.io.compress.GzipCodec:createOutputStream
+org.apache.hadoop.io.compress.GzipCodec:createCompressor
+org.apache.hadoop.io.compress.GzipCodec$GzipZlibCompressor:<init>
+org.apache.hadoop.io.compress.zlib.BuiltInZlibDeflater:reinit
+org.apache.hadoop.io.compress.zlib.ZlibCompressor:reinit
+org.apache.hadoop.io.compress.zlib.ZlibFactory:getZlibCompressor
+org.apache.hadoop.io.compress.zlib.ZlibCompressor:<init>
+org.apache.hadoop.io.compress.zlib.ZlibFactory:getCompressionLevel
+org.apache.hadoop.io.compress.zlib.ZlibFactory:getCompressionStrategy

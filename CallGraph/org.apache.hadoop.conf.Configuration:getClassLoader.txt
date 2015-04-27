@@ -1,0 +1,6 @@
+org.apache.hadoop.fs.FsShell:main
+org.apache.hadoop.fs.s3.MigrationTool:main
+org.apache.hadoop.util.ToolRunner:run
+org.apache.hadoop.util.GenericOptionsParser:<init>
+org.apache.hadoop.util.GenericOptionsParser:parseGeneralOptions
+org.apache.hadoop.util.GenericOptionsParser:processGeneralOptions

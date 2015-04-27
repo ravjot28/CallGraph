@@ -1,11 +1,16 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import callGraph.DirectedGraph;
@@ -15,11 +20,13 @@ public class Main {
 	private static String TARGET_JAR_LOCATION = "/Users/Rav/Desktop/hadoop-common-2.2.0.jar";
 	private static String STORING_CALL_GRAPH = "/Users/Rav/git/CallGraphAndControlFlow/CallGraph/";
 	private static List<String> visitedMethods;
-
+	private static List<String> finalVisitedMethods;
 	private static String logFile = STORING_CALL_GRAPH
 			+ TARGET_JAR_LOCATION
 					.substring(TARGET_JAR_LOCATION.lastIndexOf("/") + 1)
 					.replaceAll(".jar", "").replaceAll(".war", "") + ".txt";
+
+	private static String START, END;
 
 	public static void getCallGraph() {
 		String cmd1 = "java -jar " + CALL_GRAPH_JAR + " " + TARGET_JAR_LOCATION
@@ -89,41 +96,40 @@ public class Main {
 		return graph;
 	}
 
-	public static void searchParents(String method, DirectedGraph<String> graph) {
+	@SuppressWarnings("rawtypes")
+	public static void searchParents(String method, DirectedGraph<String> graph)
+			throws Exception {
+		BufferedWriter r = new BufferedWriter(new FileWriter(new File(START
+				+ ".txt"), true));
 		Iterator<?> it = graph.mGraph.entrySet().iterator();
 		while (it.hasNext()) {
 
 			Map.Entry pair = (Map.Entry) it.next();
-			// System.out.println(pair.getKey() + " = " + pair.getValue());
-			// it.remove(); // avoids a ConcurrentModificationException
-			// System.out.println(pair.getKey());
-			if (!visitedMethods.contains(pair.getKey())) {
 
+			if (!finalVisitedMethods.contains(pair.getKey())) {
 				if (graph.mGraph.get(pair.getKey()).contains(method)) {
-					visitedMethods.add(pair.getKey().toString());
 					System.out.println(pair.getKey());
+					finalVisitedMethods.add(pair.getKey().toString());
+					r.append(pair.getKey().toString());
+					r.newLine();
 					searchParents(pair.getKey().toString(), graph);
 				}
-			} else {
-				visitedMethods = new ArrayList<String>();
 			}
 
 		}
+
+		r.close();
 	}
 
-	public static void main(String[] args) {
-		// TARGET_JAR_LOCATION = "/Users/Rav/Desktop/stable-3-6/weka/weka.jar";
-		// TARGET_JAR_LOCATION =
-		// "/Volumes/iPhoto/3rdPaper/Test/target/Test-0.0.1-SNAPSHOT.jar"
-		// TARGET_JAR_LOCATION =
-		// "/Users/Rav/git/spring-petclinic/target/petclinic.war";
+	public static void main(String[] args) throws Exception {
 
-		//getCallGraph();
+		// getCallGraph();
 		DirectedGraph<String> graph = generateCallGraph();
 		visitedMethods = new ArrayList<String>();
-		searchParents(
-				"org.springframework.samples.petclinic.service.ClinicService:findPetById",
-				graph);
+		finalVisitedMethods = new ArrayList<String>();
+		START = "org.apache.hadoop.conf.Configuration:findSubVariable";
+		searchParents(START, graph);
+
 	}
 
 }

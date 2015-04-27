@@ -1,0 +1,5 @@
+org.apache.hadoop.io.BloomMapFile$Writer:<init>
+org.apache.hadoop.fs.TrashPolicyDefault$Emptier:run
+org.apache.hadoop.fs.TrashPolicyDefault:<init>
+org.apache.hadoop.io.BloomMapFile$Writer:initBloomFilter
+org.apache.hadoop.fs.TrashPolicyDefault:initialize

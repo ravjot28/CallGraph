@@ -1,0 +1,8 @@
+org.apache.hadoop.ipc.WritableRpcEngine:getServer
+org.apache.hadoop.ipc.ProtobufRpcEngine:getServer
+org.apache.hadoop.ipc.WritableRpcEngine$Server:<init>
+org.apache.hadoop.ipc.ProtobufRpcEngine$Server:<init>
+org.apache.hadoop.ipc.RPC$Server:<init>
+org.apache.hadoop.ipc.Server:<init>
+org.apache.hadoop.ipc.Server$Listener:<init>
+org.apache.hadoop.ipc.Server:bind

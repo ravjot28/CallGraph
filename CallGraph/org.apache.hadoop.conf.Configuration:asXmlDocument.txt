@@ -1,0 +1,4 @@
+org.apache.hadoop.conf.ConfServlet:doGet
+org.apache.hadoop.conf.Configuration:main
+org.apache.hadoop.conf.ConfServlet:writeResponse
+org.apache.hadoop.conf.Configuration:writeXml
